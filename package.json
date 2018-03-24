@@ -6,12 +6,15 @@
   "author": "cupeng <872345732@qq.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-loader": "^7.1.4",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.1.0",
-    "webpack": "^4.2.0",
+    "style-loader": "^0.20.3",
+    "webpack": "3.5.5",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"
   },
-  "dependencies": {
-    "jQuery": "^1.7.4"
-  }
+  "dependencies": {}
 }
