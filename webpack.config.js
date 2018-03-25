@@ -3,10 +3,13 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-function getHtmlConfig(name){
+var WEBPACK_ENV         = process.env.WEBPACK_ENV || 'dev'
+
+function getHtmlConfig(name,title){
     return {
         template: './src/view/'+ name +'.html',
         filename: 'view/'+ name +'.html',
+        title: title,
         inject: true,
         hash: true,
         trunk: ['commom',name]
@@ -26,12 +29,20 @@ const config = {
     externals: {
         'jquery': 'window.jQuery'
     },
+    resolve : {
+        alias : {
+            node_modules: __dirname + '/node_modules',
+            util: __dirname + '/src/util',
+            page: __dirname + '/src/page',
+            service: __dirname + '/src/service',
+            image: __dirname + '/src/image'
+        }
+    }
     module: {
-        rules: [
-            { test: /\.css$/, use: ExtractTextPlugin.extract({
-                fallback: "style-loader",
-                use: "css-loader"
-            }) }
+        loaders: [
+            { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader","css-loader") },
+            { test: /\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/, loader: 'url-loader?limit=100&name=resource/[name].[ext]' },
+            { test: /\.string$/, loader: 'html-loader'}
         ]
     },
     plugins: [
@@ -40,10 +51,13 @@ const config = {
             filename: 'js/commom.min.js'
         }),
         new ExtractTextPlugin("css/[name].min.css"),
-        new HtmlWebpackPlugin(getHtmlConfig('index')),
-        new HtmlWebpackPlugin(getHtmlConfig('login'))
+        new HtmlWebpackPlugin(getHtmlConfig('index','首页')),
+        new HtmlWebpackPlugin(getHtmlConfig('login','登录'))
     ],
-    devServer: {}
+}
+
+if('dev' === WEBPACK_ENV){
+    config.entry.common.push('webpack-dev-server/client?http://localhost:8088/');
 }
 
 module.exports = config
