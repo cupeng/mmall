@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-var WEBPACK_ENV         = process.env.WEBPACK_ENV || 'dev'
+var WEBPACK_ENV = process.env.WEBPACK_ENV || 'dev'
 
 function getHtmlConfig(name,title){
     return {
@@ -12,18 +12,19 @@ function getHtmlConfig(name,title){
         title: title,
         inject: true,
         hash: true,
-        trunk: ['commom',name]
+        chunks: ['common', name]
     }
 }
 
 const config = {
     entry: {
+        'common': ['./src/page/common/index.js'],
         'index': ['./src/page/index/index.js'],
         'login': ['./src/page/login/index.js']
     },
     output: {
         path: path.resolve(__dirname,'dist'),
-        publicPath: '/dist/view',
+        publicPath: '/dist',
         filename: 'js/[name].min.js'
     },
     externals: {
@@ -37,27 +38,62 @@ const config = {
             service: __dirname + '/src/service',
             image: __dirname + '/src/image'
         }
-    }
+    },
     module: {
-        loaders: [
-            { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader","css-loader") },
-            { test: /\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/, loader: 'url-loader?limit=100&name=resource/[name].[ext]' },
-            { test: /\.string$/, loader: 'html-loader'}
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env']
+                    }
+                }
+            },
+            { 
+                test: /\.css$/, 
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
+            },
+            { 
+                test: /\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/, 
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: 'resource/[name].[ext]'
+                        }
+                    }
+                ] 
+            },
+            { 
+                test: /\.string$/, loader: 'html-loader'
+            }
         ]
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common',
-            filename: 'js/commom.min.js'
+            filename: 'js/common.min.js'
         }),
         new ExtractTextPlugin("css/[name].min.css"),
         new HtmlWebpackPlugin(getHtmlConfig('index','首页')),
-        new HtmlWebpackPlugin(getHtmlConfig('login','登录'))
+        new HtmlWebpackPlugin(getHtmlConfig('login','用户登录'))
     ],
-}
-
-if('dev' === WEBPACK_ENV){
-    config.entry.common.push('webpack-dev-server/client?http://localhost:8088/');
+    devServer: {
+        port:8086,
+        contentBase: path.resolve(__dirname,'dist/view'),
+        proxy: {
+            '/product': {
+                target: 'http://www.happymmall.com',
+                changeOrigin : true
+            }
+        }
+    }
 }
 
 module.exports = config
