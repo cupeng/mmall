@@ -24,7 +24,6 @@ const config = {
     },
     output: {
         path: path.resolve(__dirname,'dist'),
-        publicPath: '/dist',
         filename: 'js/[name].min.js'
     },
     externals: {
