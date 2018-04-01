@@ -20,7 +20,8 @@ const config = {
     entry: {
         'common': ['./src/page/common/index.js'],
         'index': ['./src/page/index/index.js'],
-        'login': ['./src/page/login/index.js']
+        'login': ['./src/page/login/index.js'],
+        'result': ['./src/page/result/index.js']
     },
     output: {
         path: path.resolve(__dirname,'dist'),
@@ -78,11 +79,12 @@ const config = {
         }),
         new ExtractTextPlugin("css/[name].min.css"),
         new HtmlWebpackPlugin(getHtmlConfig('index','首页')),
-        new HtmlWebpackPlugin(getHtmlConfig('login','用户登录'))
+        new HtmlWebpackPlugin(getHtmlConfig('login','用户登录')),
+        new HtmlWebpackPlugin(getHtmlConfig('result','操作成功'))
     ],
     devServer: {
         port:8086,
-        contentBase: path.resolve(__dirname,'dist'),
+        contentBase: path.resolve(__dirname,'dist/'),
         proxy: {
             '/product': {
                 target: 'http://www.happymmall.com',
