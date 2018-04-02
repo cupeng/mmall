@@ -80,7 +80,7 @@ const config = {
         new ExtractTextPlugin("css/[name].min.css"),
         new HtmlWebpackPlugin(getHtmlConfig('index','首页')),
         new HtmlWebpackPlugin(getHtmlConfig('login','用户登录')),
-        new HtmlWebpackPlugin(getHtmlConfig('result','操作成功'))
+        new HtmlWebpackPlugin(getHtmlConfig('result','操作页'))
     ],
     devServer: {
         port:8086,

@@ -7,5 +7,9 @@
     line-height: 30px;
 }
 .footer .link{
+    border-right: 1px solid #666;
     padding:0 10px;
+}
+.footer .link:nth-last-of-type(1){
+    border: none;
 }
