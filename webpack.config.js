@@ -24,6 +24,7 @@ const config = {
     },
     output: {
         path: path.resolve(__dirname,'dist'),
+        publicPath: '/dist',
         filename: 'js/[name].min.js'
     },
     externals: {
@@ -51,21 +52,24 @@ const config = {
                 }
             },
             { 
-                test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2|otf)$/, 
-                use: [
-                    {
-                        loader: 'url-loader'
-                    }
-                ] 
-            },
-            { 
                 test: /\.css$/, 
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
                     use: "css-loader"
                 })
             },
-            
+            { 
+                test: /\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/, 
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: 'resource/[name].[ext]'
+                        }
+                    }
+                ] 
+            },
             { 
                 test: /\.string$/, loader: 'html-loader'
             }
@@ -82,7 +86,7 @@ const config = {
     ],
     devServer: {
         port:8086,
-        contentBase: path.resolve(__dirname,'dist'),
+        contentBase: path.resolve(__dirname,'dist/view'),
         proxy: {
             '/product': {
                 target: 'http://www.happymmall.com',
