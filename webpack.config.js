@@ -20,7 +20,9 @@ const config = {
     entry: {
         'common': ['./src/page/common/index.js'],
         'index': ['./src/page/index/index.js'],
-        'login': ['./src/page/login/index.js'],
+        'user-login': ['./src/page/user-login/index.js'],
+        'user-register': ['./src/page/user-register/index.js'],
+        'user-pass-reset': ['./src/page/user-pass-reset/index.js'],
         'result': ['./src/page/result/index.js']
     },
     output: {
@@ -51,13 +53,13 @@ const config = {
                     }
                 }
             },
-            { 
-                test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2|otf)$/, 
+            {
+                test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2|otf)$/,
                 use: [
                     {
-                        loader: 'url-loader'
+                        loader: 'url-loader',
                     }
-                ] 
+                ]
             },
             { 
                 test: /\.css$/, 
@@ -66,7 +68,6 @@ const config = {
                     use: "css-loader"
                 })
             },
-            
             { 
                 test: /\.string$/, loader: 'html-loader'
             }
@@ -79,7 +80,9 @@ const config = {
         }),
         new ExtractTextPlugin("css/[name].min.css"),
         new HtmlWebpackPlugin(getHtmlConfig('index','首页')),
-        new HtmlWebpackPlugin(getHtmlConfig('login','用户登录')),
+        new HtmlWebpackPlugin(getHtmlConfig('user-login','用户登录')),
+        new HtmlWebpackPlugin(getHtmlConfig('user-register','用户注册')),
+        new HtmlWebpackPlugin(getHtmlConfig('user-pass-reset','找回密码')),
         new HtmlWebpackPlugin(getHtmlConfig('result','操作页'))
     ],
     devServer: {
@@ -88,7 +91,15 @@ const config = {
         proxy: {
             '/product': {
                 target: 'http://www.happymmall.com',
-                changeOrigin : true
+                changeOrigin: true
+            },
+            '/user': {
+                target: 'http://www.happymmall.com',
+                changeOrigin: true
+            },
+            '/cart': {
+                target: 'http://www.happymmall.com',
+                changeOrigin: true
             }
         }
     }

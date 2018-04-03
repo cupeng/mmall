@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+    <%= require("html-loader!./layout/header-common.html") %>
+    <title><%= htmlWebpackPlugin.options.title %> - happymmall电商平台</title>
+</head>
+<body>
+    <%= require("html-loader!./layout/nav-simple.html") %>
+    <div class="page-wrap">
+        <div class="w">
+            <div class="user-con">
+                <div class="user-title">找回密码</div>
+                <div class="user-box">
+                    <div class="error-item">
+                        <i class="fa fa-minus-circle error-icon"></i>
+                        <p class="error-msg"></p>
+                    </div>
+                    <div class="step-con step-username">
+                        <div class="user-item">
+                            <label for="username" class="user-label">
+                                <i class="fa fa-user"></i>
+                            </label>
+                            <input placeholder="请输入用户名" id="username" type="text" class="user-content" />
+                        </div>
+                        <input class="btn" id="submit" type="button" value="下一步" />
+                        <div class="link-item">
+                        </div>
+                    </div>
+                    <div class="step-con step-question">
+                        <div class="user-item">
+                            <label for="question" class="user-label">
+                                <i class="fa fa-user"></i>
+                            </label>
+                            <input placeholder="请输入问题答案" id="question" type="text" class="user-content" />
+                        </div>
+                        <input class="btn" id="submit" type="button" value="下一步" />
+                        <div class="link-item">
+                        </div>
+                    </div>
+                    <div class="step-con step-password">
+                        <div class="user-item">
+                            <label for="password" class="user-label">
+                                <i class="fa fa-user"></i>
+                            </label>
+                            <input placeholder="请输入新的密码" id="password" type="text" class="user-content" />
+                        </div>
+                        <input class="btn" id="submit" type="button" value="下一步" />
+                    </div>  
+                    <div class="link-item">
+                        <a href="./user-login.html" class="link">返回登录>></a>
+                    </div>   
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <%= require("html-loader!./layout/footer.html") %>
+</body>
+</html>

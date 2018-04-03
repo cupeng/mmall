@@ -62,11 +62,11 @@ var _mm = {
         }
     },
     goHome: function() {
-        return window.location.href = '/'
+        return window.location.href = './index.html'
     },
     //统一登录处理
     doLogin: function() {
-        window.location.href = './login.html?redirect=' + encodeURLComponent(window.location.href)
+        window.location.href = './user-login.html?redirect=' + encodeURIComponent(window.location.href)
     }
 }
 
